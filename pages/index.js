@@ -1,65 +1,42 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-
+import Head from "next/head";
+import { usetState } from "react";
+// import styles from "../styles/Home.module.css";
+import Title from "../components/Header";
+import Quote from "../components/Quote";
+import Square from "../components/Square";
 export default function Home() {
+  // const user = {age:}
+  const cal = [];
+
+  const past = new Date(1993, 5, 29);
+  let today = new Date();
+  let result = today.getTime() - past.getTime();
+  //get milliseconds in day
+  let inDay = 1000 * 3600 * 24;
+  let daysPassed = result / inDay;
+  let weeksPassed = daysPassed / 7;
+  console.log(past);
+  console.log(today);
+
+  console.log(daysPassed % 7);
+  console.log("days left: ", 29200 - daysPassed);
+  for (let i = 1; i <= 4000; i++) {
+    cal.push(i);
+  }
   return (
-    <div className={styles.container}>
+    <div className="lg:container lg:mx-auto px-4">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Memento Mori</title>
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <Title />
+      <div className="flex flex-wrap">
+        {cal.map((week, i) => {
+          if (i < weeksPassed) {
+            return <Square num={i + 1} passed={true} />;
+          } else return <Square num={i + 1} passed={false} />;
+        })}
+      </div>
+      <Quote />
     </div>
-  )
+  );
 }
